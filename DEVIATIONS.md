@@ -34,7 +34,7 @@ Search the code for `DESIGN-DECISION` to find each one in place.
 
 - Lighthouse scores (target: accessibility 95, performance 85) were not measured. The JS bundle is one 649 kB minified chunk (204 kB gzip); lazy-loading the session and review routes would help performance.
 - A full contrast audit and screen-reader pass were not run. The live regions, labels and focus management are built in but untested with a real screen reader.
-- The Playwright spec is written but was not run here, because the Chromium download was not approved in this session. Run `npx playwright install chromium && npm run test:e2e`.
+- The Playwright spec passes (2 tests: the full path, and the `?fail=submit` network error, rejection and acceptance sequence). Run it with `npx playwright install chromium && npm run test:e2e`.
 - Dark theme is a basic token swap, as the prompt's stretch goal allows.
 - Below 768 px the side rail is hidden; the page stays usable but the avatar/role menu is not reachable there.
 - Real microphone audio is only permission-checked; the orb level and transcript are always scripted.

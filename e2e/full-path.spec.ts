@@ -38,7 +38,7 @@ test('full demo path', async ({ page }) => {
 
   await expect(page.getByRole('button', { name: /Keep all high-confidence/ })).toBeVisible({ timeout: 60_000 });
   await page.getByRole('button', { name: /Keep all high-confidence/ }).click();
-  await expect(page.getByText('2 issues found that may impact claim approval.')).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByText('2 issues found that may impact claim approval.', { exact: true })).toBeVisible({ timeout: 60_000 });
   await page.locator('body').click({ position: { x: 5, y: 5 } });
   for (let i = 0; i < 8; i++) await page.keyboard.press('k');
 
@@ -63,7 +63,7 @@ test('full demo path', async ({ page }) => {
   await page.getByRole('button', { name: 'Send' }).click();
   await page.getByRole('button', { name: /Submit claim to NPHIES/ }).click();
   await expect(page.getByText('Accepted')).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByText(/CLM-2026-/)).toBeVisible();
+  await expect(page.getByRole('dialog').getByText(/CLM-2026-/)).toBeVisible();
   await page.getByRole('button', { name: 'Back to Control room' }).click();
 
   // Dashboard reflects the cleared claim
