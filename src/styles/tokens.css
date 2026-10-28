@@ -1,0 +1,145 @@
+/*
+ * Medexa design tokens. The ONLY file in src/ allowed to contain raw colour,
+ * radius, spacing or shadow literals (enforced by `npm run check:tokens`).
+ * Source: Figma "Design System" page + build prompt section 2.
+ * DESIGN-DECISION: get_variable_defs could not be read (needs a live selection
+ * in Figma desktop), so values follow the prompt and the frame renders. See DEVIATIONS.md.
+ */
+:root {
+  /* Brand */
+  --color-primary: #010ED0;
+  --color-primary-hover: #0A18E8;
+  --color-primary-pressed: #0009A8;
+  --color-primary-subtle: rgba(1, 14, 208, 0.08);
+  --color-primary-subtle-strong: rgba(1, 14, 208, 0.16);
+  --color-ink: #0A0D31;
+  --color-ink-hover: #1A1E4F;
+  --color-indigo: #5457E8;
+  --color-indigo-bg: rgba(84, 87, 232, 0.12);
+  --color-teal: #12B5A6;
+
+  /* Surfaces */
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F6F7FB;
+  --color-surface-sunken: #EEF0F7;
+  --color-surface-glass: rgba(255, 255, 255, 0.72);
+  --color-scrim: rgba(10, 13, 49, 0.28);
+  --color-disabled-bg: #E6E7EE;
+  --color-disabled-text: rgba(10, 13, 49, 0.38);
+
+  /* Text */
+  --color-text-primary: #0A0D31;
+  --color-text-secondary: rgba(10, 13, 49, 0.64);
+  --color-text-tertiary: rgba(10, 13, 49, 0.48);
+  --color-text-on-dark: #FFFFFF;
+  --color-text-on-dark-muted: rgba(255, 255, 255, 0.68);
+  --color-border: rgba(10, 13, 49, 0.12);
+  --color-border-strong: rgba(10, 13, 49, 0.24);
+  --color-border-on-dark: rgba(255, 255, 255, 0.18);
+  --color-focus: #010ED0;
+
+  /* Status */
+  --color-success: #1DB86A;  --color-success-bg: rgba(29, 184, 106, 0.14);  --color-success-text: #0F7E3F;
+  --color-warning: #F5A524;  --color-warning-bg: rgba(245, 165, 36, 0.18);  --color-warning-text: #8A5A00;
+  --color-error:   #F0424F;  --color-error-bg:   rgba(240, 66, 79, 0.12);   --color-error-text:   #C21D2A;
+  --color-info: #2F6BFF;     --color-info-bg: rgba(47, 107, 255, 0.12);
+
+  /* Dark card (Priority Queue, Claim Readiness) - stays dark in both themes */
+  --color-dark-card: #0B0E33;
+  --color-dark-card-2: #1B2150;
+  --color-deck-1: #2B2F59;
+  --color-deck-2: #5E6186; /* darkened from the render so white text passes 4.5:1 */
+  --color-deck-3: #E7E8F0;
+  --gradient-dark-card: linear-gradient(160deg, #0B0E33 0%, #16204F 55%, #1D3B4A 100%);
+  --gradient-claim-ready: linear-gradient(180deg, #0B0E33 0%, #2A2F5E 100%);
+  --gradient-pipeline-head: linear-gradient(110deg, #2533E6 0%, #12B5A6 100%);
+  --gradient-ai-border: linear-gradient(135deg, #5457E8 0%, #7DE36B 100%);
+
+  /* AI identity: primary blue -> violet -> cyan (not in Figma; DESIGN-DECISION) */
+  --ai-glow-1: #010ED0;
+  --ai-glow-2: #8B5CF6;
+  --ai-glow-3: #22D3EE;
+  --ai-glow: linear-gradient(120deg, var(--ai-glow-1), var(--ai-glow-2), var(--ai-glow-3));
+  --ai-glow-shadow: 0 0 0 1px rgba(139, 92, 246, 0.25), 0 0 24px rgba(34, 211, 238, 0.22);
+
+  /* Ambient backdrop ("Gradient/Ambient background") */
+  --gradient-ambient:
+    radial-gradient(1200px 700px at 0% 0%, #D9DCFA 0%, transparent 60%),
+    radial-gradient(900px 600px at 100% 100%, #E3F7D4 0%, transparent 60%),
+    radial-gradient(800px 600px at 80% 10%, #E4E8F6 0%, transparent 60%),
+    #EEF0F8;
+
+  /* Orb */
+  --orb-core: radial-gradient(circle at 50% 35%, #8FD3FF 0%, #2F7BFF 45%, #1640D8 100%);
+  --orb-ring: rgba(120, 170, 255, 0.22);
+
+  /* Space */
+  --space-050: 2px; --space-100: 4px; --space-150: 6px; --space-200: 8px; --space-250: 10px; --space-300: 12px;
+  --space-350: 14px; --space-400: 16px; --space-500: 20px; --space-600: 24px; --space-800: 32px;
+  --space-700: 28px; --space-900: 36px; --space-1000: 40px; --space-1100: 44px; --space-1200: 48px;
+  --space-1400: 56px; --space-1600: 64px; --space-2000: 80px; --space-3000: 120px; --space-4000: 160px; --space-6000: 240px; --space-8000: 320px;
+
+  /* Radius */
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 999px;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(10, 13, 49, 0.06), 0 0 0 1px rgba(10, 13, 49, 0.04);
+  --shadow-raised: 0 4px 16px rgba(10, 13, 49, 0.08), 0 1px 2px rgba(10, 13, 49, 0.06);
+  --shadow-hover: 0 10px 28px rgba(10, 13, 49, 0.12), 0 2px 4px rgba(10, 13, 49, 0.06);
+  --shadow-modal: 0 24px 64px rgba(10, 13, 49, 0.24), 0 4px 12px rgba(10, 13, 49, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(1, 14, 208, 0.35);
+
+  /* Type */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-arabic: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif;
+  --text-display: 40px; --text-stat: 28px; --text-h1: 24px; --text-h2: 20px; --text-h3: 18px; --text-h4: 16px;
+  --text-body-lg: 16px; --text-body: 14px; --text-body-sm: 13px; --text-caption: 12px; --text-micro: 10px;
+  --leading-body: 1.4; --leading-heading: 1.2;
+
+  /* Strokes and effects */
+  --hairline: 1px;
+  --stroke-2: 2px;
+  --focus-offset: 2px;
+  --blur-glass: 18px;
+  --mask-solid: #000;
+  --pulse-spread: 12px;
+
+  /* Layout */
+  --rail-width: 72px;
+  --modal-width: 640px;
+  --pulse-width: 480px;
+  --drawer-width: 440px;
+  --touch-min: 40px;
+
+  /* Motion */
+  --dur-fast: 150ms; --dur-base: 200ms; --dur-slow: 250ms; --dur-carousel: 350ms; --dur-meter: 500ms; --dur-ring: 600ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Basic dark token set (stretch goal). Dark cards keep their own gradients. */
+:root[data-theme='dark'] {
+  --color-surface: #12152F;
+  --color-surface-muted: #181C3B;
+  --color-surface-sunken: #1E2346;
+  --color-surface-glass: rgba(18, 21, 47, 0.78);
+  --color-text-primary: #EEF0FF;
+  --color-text-secondary: rgba(238, 240, 255, 0.7);
+  --color-text-tertiary: rgba(238, 240, 255, 0.52);
+  --color-border: rgba(238, 240, 255, 0.14);
+  --color-border-strong: rgba(238, 240, 255, 0.28);
+  --color-primary: #5C6BFF;
+  --color-primary-hover: #7482FF;
+  --color-primary-pressed: #4352F0;
+  --color-primary-subtle: rgba(92, 107, 255, 0.16);
+  --color-primary-subtle-strong: rgba(92, 107, 255, 0.26);
+  --color-focus: #8C97FF;
+  --color-disabled-bg: #262B52;
+  --color-disabled-text: rgba(238, 240, 255, 0.4);
+  --color-success-text: #4ADE8B;
+  --color-warning-text: #FBBF4D;
+  --color-error-text: #FF7A84;
+  --gradient-ambient:
+    radial-gradient(1200px 700px at 0% 0%, #1B2160 0%, transparent 60%),
+    radial-gradient(900px 600px at 100% 100%, #123A2E 0%, transparent 60%),
+    #0B0D24;
+}
