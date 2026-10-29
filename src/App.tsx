@@ -41,7 +41,8 @@ export default function App() {
     <ErrorBoundary>
       <MotionConfig reducedMotion="user">
         <RTooltip.Provider delayDuration={250}>
-          <BrowserRouter>
+          {/* basename follows Vite's base ("/" locally, "/medexa/" on GitHub Pages) */}
+          <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
             <Globals />
             <Routes>
               <Route element={<AppShell />}>

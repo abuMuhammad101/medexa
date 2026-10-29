@@ -58,7 +58,7 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
             title="Something went wrong"
             body={this.state.error.message}
             action={
-              <a href="/" className={linkBtn}>
+              <a href={import.meta.env.BASE_URL} className={linkBtn}>
                 Back to dashboard
               </a>
             }
