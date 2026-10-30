@@ -41,12 +41,14 @@ export function Orb({ state, level = 0 }: { state: OrbState; level?: number }) {
         playsInline
         preload="auto"
         tabIndex={-1}
-        className={cn('h-full w-full object-cover transition-transform duration-fast', dark && 'mix-blend-screen')}
+        className={cn('h-full w-full object-cover transition-transform duration-fast', dark ? 'mix-blend-screen' : 'mix-blend-multiply')}
         style={{
           transform: `scale(${scale})`,
-          // dark: the render's black melts into the page via screen; light: crop to the sphere itself
-          maskImage: dark ? 'radial-gradient(circle, black 55%, transparent 72%)' : 'radial-gradient(circle closest-side, black 76%, transparent 84%)',
-          WebkitMaskImage: dark ? 'radial-gradient(circle, black 55%, transparent 72%)' : 'radial-gradient(circle closest-side, black 76%, transparent 84%)',
+          // dark: black melts into the page (screen), lines glow. light: invert so the black
+          // becomes white and multiply lets the page show through, leaving teal ink.
+          filter: dark ? 'brightness(1.25) contrast(1.15) saturate(1.2)' : 'invert(1) hue-rotate(180deg) saturate(1.5) contrast(1.1)',
+          maskImage: 'radial-gradient(circle closest-side, black 70%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(circle closest-side, black 70%, transparent 100%)',
         }}
       />
     </div>
