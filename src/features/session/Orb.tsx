@@ -26,9 +26,9 @@ export function Orb({ state, level = 0 }: { state: OrbState; level?: number }) {
     <div
       aria-hidden
       className={cn(
-        'pointer-events-none absolute -bottom-40 -right-30 h-[34rem] w-[34rem] transition-[filter,opacity] duration-slow',
+        'pointer-events-none absolute -bottom-30 -right-20 h-[26rem] w-[26rem] transition-[filter,opacity] duration-slow',
         state === 'paused' && 'grayscale',
-        state === 'idle' && 'opacity-80',
+        state === 'idle' ? 'opacity-40' : 'opacity-60',
       )}
       style={{ filter: state === 'error' ? 'sepia(0.8) saturate(2.2) hue-rotate(-12deg)' : undefined }}
     >
