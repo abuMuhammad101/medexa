@@ -1,62 +1,54 @@
 /**
- * The agent's presence. States: idle, listening (breathing, scales with audio
- * level), thinking (rings rotate), paused (static, desaturated), error (amber).
+ * The agent's presence: a looping sphere render. States: idle (dimmed), listening
+ * (breathing, scales with audio level), thinking (faster playback), paused (frozen,
+ * desaturated), error (amber).
  */
+import { useEffect, useRef } from 'react';
 import { cn } from '../../lib/format';
+import { useUi } from '../../store/ui';
 
 export type OrbState = 'idle' | 'listening' | 'thinking' | 'paused' | 'error';
 
 export function Orb({ state, level = 0 }: { state: OrbState; level?: number }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const dark = useUi((s) => s.theme) === 'dark';
   const scale = state === 'listening' ? 1 + Math.min(level, 1) * 0.06 : 1;
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.playbackRate = state === 'thinking' ? 2 : 1;
+    if (state === 'paused') v.pause();
+    else void v.play().catch(() => undefined);
+  }, [state]);
+
   return (
     <div
       aria-hidden
       className={cn(
-        'pointer-events-none absolute -bottom-40 -right-30 h-[34rem] w-[34rem] transition-[filter] duration-slow',
+        'pointer-events-none absolute -bottom-40 -right-30 h-[34rem] w-[34rem] transition-[filter,opacity] duration-slow',
         state === 'paused' && 'grayscale',
-        state === 'idle' && 'opacity-70',
+        state === 'idle' && 'opacity-80',
       )}
       style={{ filter: state === 'error' ? 'sepia(0.8) saturate(2.2) hue-rotate(-12deg)' : undefined }}
     >
-      {[0, 1, 2, 3].map((i) => (
-        <div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            inset: `${i * 9}%`,
-            background: 'var(--orb-ring)',
-            animation:
-              state === 'listening'
-                ? `breathe ${4 + i}s ease-in-out ${i * 0.3}s infinite`
-                : state === 'thinking'
-                  ? `spin-slow ${8 + i * 3}s linear infinite`
-                  : undefined,
-            border: state === 'thinking' ? 'var(--hairline) dashed var(--color-indigo)' : undefined,
-          }}
-        />
-      ))}
-      <div
-        className="absolute rounded-full transition-transform duration-fast"
+      <video
+        ref={ref}
+        src={`${import.meta.env.BASE_URL}orb.mp4`}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        tabIndex={-1}
+        className={cn('h-full w-full object-cover transition-transform duration-fast', dark && 'mix-blend-screen')}
         style={{
-          inset: '36%',
-          background: 'var(--orb-core)',
-          boxShadow: 'var(--ai-glow-shadow)',
           transform: `scale(${scale})`,
-          animation: state === 'listening' ? 'breathe 3s ease-in-out infinite' : undefined,
+          // dark: the render's black melts into the page via screen; light: crop to the sphere itself
+          maskImage: dark ? 'radial-gradient(circle, black 55%, transparent 72%)' : 'radial-gradient(circle closest-side, black 76%, transparent 84%)',
+          WebkitMaskImage: dark ? 'radial-gradient(circle, black 55%, transparent 72%)' : 'radial-gradient(circle closest-side, black 76%, transparent 84%)',
         }}
       />
-      {/* wave texture */}
-      <svg viewBox="0 0 100 100" className="absolute opacity-40" style={{ inset: '36%' }}>
-        {[0, 1, 2, 3, 4].map((i) => (
-          <path
-            key={i}
-            d={`M0 ${40 + i * 6} Q 25 ${34 + i * 6 - level * 8}, 50 ${40 + i * 6} T 100 ${40 + i * 6}`}
-            fill="none"
-            stroke="var(--color-text-on-dark)"
-            strokeWidth="0.4"
-          />
-        ))}
-      </svg>
     </div>
   );
 }
